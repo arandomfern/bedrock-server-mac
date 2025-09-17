@@ -26,7 +26,6 @@ DEST="$HOME/bedrock-server"
 mkdir -p "$DEST"
 cd "$DEST" || exit 1
 
-# --- Get latest Windows Bedrock server URL from API ---
 API_URL="https://net-secondary.web.minecraft-services.net/api/v1.0/download/links"
 DOWNLOAD_URL=$(curl -sL "$API_URL" | python3 -c "
 import sys, json
@@ -44,7 +43,6 @@ if [ -z "$DOWNLOAD_URL" ]; then
     exit 1
 fi
 
-# --- Download ZIP ---
 ZIP_FILE="$DEST/bedrock-server.zip"
 echo "Downloading latest Bedrock server from $DOWNLOAD_URL ..."
 curl -L -A "Mozilla/5.0" -o "$ZIP_FILE" "$DOWNLOAD_URL"
@@ -54,7 +52,6 @@ if [ ! -f "$ZIP_FILE" ]; then
     exit 1
 fi
 
-# --- Unzip all files starting with 'bedrock-server' ---
 echo "Unzipping server..."
 for zip in bedrock-server*.zip; do
     [ -f "$zip" ] || continue
@@ -63,7 +60,6 @@ done
 
 rm "$ZIP_FILE"
 
-# --- Instructions ---
 echo ""
 echo "Bedrock server is ready in '$DEST'."
 echo "Run it with:"
